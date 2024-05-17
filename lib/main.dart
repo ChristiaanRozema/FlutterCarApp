@@ -5,8 +5,6 @@ import 'car_climate_Page.dart';
 import 'car_info_page.dart';
 import 'RSMonitor_page.dart';
 
-//this is test code for you
-
 void main() {
   runApp(RenaultApp());
 }
