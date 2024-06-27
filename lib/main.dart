@@ -6,7 +6,7 @@ import 'car_info_page.dart';
 import 'RSMonitor_page.dart';
 
 void main() {
-  runApp(RenaultApp());
+  runApp(RenaultApp()); 
 }
 
 class RenaultApp extends StatelessWidget {

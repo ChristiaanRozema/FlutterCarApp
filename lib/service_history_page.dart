@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'database_service.dart';
+import 'addservice_screen.dart';
 
 class ServiceHistoryPage extends StatefulWidget {
   @override
@@ -6,23 +8,21 @@ class ServiceHistoryPage extends StatefulWidget {
 }
 
 class _ServiceHistoryPageState extends State<ServiceHistoryPage> {
-  List<Map<String, String?>> serviceHistory = [
-    {
-      'date': 'January 10, 2023',
-      'type': 'Regular Maintenance',
-      'details': 'Oil change, filter replacement',
-    },
-    {
-      'date': 'April 5, 2023',
-      'type': 'Brake Inspection',
-      'details': 'Brake pads replacement',
-    },
-    {
-      'date': 'July 20, 2023',
-      'type': 'Tire Rotation',
-      'details': 'Rotation and alignment',
-    },
-  ];
+  List<Map<String, dynamic>> serviceHistory = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchServiceHistory();
+  }
+
+  Future<void> _fetchServiceHistory() async {
+    DatabaseService dbService = DatabaseService();
+    List<Map<String, dynamic>> data = await dbService.fetchData();
+    setState(() {
+      serviceHistory = data;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +30,9 @@ class _ServiceHistoryPageState extends State<ServiceHistoryPage> {
       appBar: AppBar(
         title: Text('Service History'),
       ),
-      body: Container(
-        child: ListView(
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+      body: serviceHistory.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
               itemCount: serviceHistory.length,
               itemBuilder: (context, index) {
                 return ListTile(
@@ -62,16 +59,6 @@ class _ServiceHistoryPageState extends State<ServiceHistoryPage> {
                 );
               },
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Disclaimer: Performing self-service may void the warranty of your car. Please consult your warranty agreement for more details.',
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ],
-        ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -207,6 +194,3 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
     super.dispose();
   }
 }
-
-
-

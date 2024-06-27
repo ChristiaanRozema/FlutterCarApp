@@ -123,10 +123,10 @@ class _CarControlPageState extends State<CarControlPage> {
             icon: Icon(Icons.history),
             label: 'Geschiedenis',
           ),      
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sunny),
-            label: 'Klimaat',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.sunny),
+          //   label: 'Klimaat',
+          // ),
         ],
         selectedItemColor: Colors.yellow,
         unselectedItemColor: Colors.white, // Instellen van de kleur van het niet-geselecteerde pictogram op wit
